@@ -1,0 +1,70 @@
+﻿
+@model List<CarRentalApp.Models.Car>
+
+@{
+    ViewData["Title"] = "Available Cars";
+}
+
+<div class="mb-4">
+    <h2 class="fw-bold">Available Cars</h2>
+    <p class="text-muted">
+        Select a car below and click Book Car to reserve it.
+    </p>
+</div>
+
+@if (Model.Count == 0)
+{
+    <div class="alert alert-info">
+        No cars are currently available.
+    </div>
+}
+else
+{
+    <div class="row g-4">
+        @foreach (var car in Model)
+        {
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card car-card">
+                    <div class="card-body p-4 d-flex flex-column">
+
+                        <div class="d-flex justify-content-between
+                                    align-items-start mb-3">
+                            <h4 class="card-title mb-0">
+                                @car.Name
+                            </h4>
+
+                            <span class="badge bg-success">
+                                Available
+                            </span>
+                        </div>
+
+                        <p class="text-muted mb-4">
+                            Price per day
+                        </p>
+
+                        <h5 class="fw-bold mb-4">
+                            PKR @car.PricePerDay.ToString("N0")
+                        </h5>
+
+                        <form asp-controller="Cars"
+                              asp-action="Book"
+                              method="post"
+                              class="mt-auto">
+
+                            <input type="hidden"
+                                   name="id"
+                                   value="@car.Id" />
+
+                            <button type="submit"
+                                    class="btn btn-primary w-100">
+                                Book Car
+                            </button>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
